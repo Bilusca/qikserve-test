@@ -2,11 +2,13 @@ import { FC, SVGProps } from "react";
 import { Search } from "./Search";
 import { Plus } from "./Plus";
 import { Minus } from "./Minus";
+import { Caret } from "./Caret";
 
 const ICONS = {
   search: Search,
   plus: Plus,
-  minus: Minus
+  minus: Minus,
+  caret: Caret
 } as const
 
 interface IconsType extends SVGProps<SVGSVGElement> {
