@@ -5,6 +5,13 @@ export default {
     extend: {
       colors: {
         'app-bg': 'rgba(238, 238, 238, 1)',
+        'background-colour': 'var(--bg-colour)',
+        'primary-colour': 'var(--primary-colour)',
+        'primary-colour-hover': 'var(--primary-colour-hover)',
+        'nav-colour': 'var(--nav-colour)',
+      },
+      backgroundImage: {
+        'banner-img': 'var(--banner-img)',
       },
     },
   },

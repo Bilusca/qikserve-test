@@ -9,12 +9,18 @@ export function CartItem() {
       </div>
       <span className="tracking-[0.5px]">Com 2 carnes</span>
       <div className="flex items-center flex-row gap-1">
-        <button>
-          <Icons className="text-orange-500 w-5" name="minus" />
+        <button className="group">
+          <Icons
+            className="text-primary-colour group-hover:text-primary-colour-hover transition-colors w-5"
+            name="minus"
+          />
         </button>
         <span className="font-bold w-5 text-center">1</span>
-        <button>
-          <Icons className="text-orange-500 w-5" name="plus" />
+        <button className="group">
+          <Icons
+            className="text-primary-colour w-5 group-hover:text-primary-colour-hover transition-colors"
+            name="plus"
+          />
         </button>
       </div>
     </div>
