@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 export const Minus: FC = (props) => {
   return (
@@ -11,6 +11,5 @@ export const Minus: FC = (props) => {
       />
       <rect x={4} y={8.5} width={12} height={3} rx={1.5} fill="#fff" />
     </svg>
-  );
+  )
 }
-

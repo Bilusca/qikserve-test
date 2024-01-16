@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage'
 
 import appConfig from './app-config'
 import menuStore from './menu'
+import cartStore from './cart/indext'
 
 const persistConfig = {
   key: 'qiserve-whitelabel',
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   appConfig,
   menuStore,
+  cartStore,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

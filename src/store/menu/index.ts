@@ -1,14 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Menu } from './entities'
+import { Menu, Section } from './entities'
 
 export const menuStore = createSlice({
   name: 'menuStore',
   initialState: {
-    menu: {} as Menu,
+    menu: {} as Omit<Menu, 'sections'>,
+    sections: [] as Section[],
   },
   reducers: {
     setMenu: (state, action: PayloadAction<Menu>) => {
-      state.menu = action.payload
+      const { sections, ...rest } = action.payload
+
+      state.menu = rest
+      state.sections = sections
     },
   },
 })

@@ -2,6 +2,7 @@ import { Root, Content, Header, Item, Trigger } from '@radix-ui/react-accordion'
 import { ItemsListItem } from './ItemsListItem'
 import { Icons } from '@/components/Icons'
 import { Item as ItemType, Section } from '@/store/menu/entities'
+import { formatCurrency } from '@/utils/numberFormat'
 
 type ItemList = {
   value: string
@@ -11,12 +12,16 @@ type ItemList = {
 export function ItemsList({ value, section }: ItemList) {
   function checkPrice(price: number, item: ItemType) {
     if (price > 0) {
-      return price
+      return formatCurrency(price)
     }
 
-    return item.modifiers !== undefined
-      ? item.modifiers[0].items.sort((a, b) => a.price - b.price)[0].price
-      : price
+    if (!item.modifiers?.length) {
+      return 0
+    }
+
+    const value = item.modifiers[0].items[0].price ?? 0
+
+    return formatCurrency(value)
   }
 
   return (
@@ -41,8 +46,9 @@ export function ItemsList({ value, section }: ItemList) {
                 key={item.id}
                 name={item.name}
                 description={item.description}
-                image={item.images ? item.images[0].image : undefined}
+                image={item.images?.length ? item.images[0].image : undefined}
                 price={checkPrice(item.price, item)}
+                item={item}
               />
             ))}
           </ul>

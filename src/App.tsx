@@ -1,5 +1,6 @@
-import { CSSProperties, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import { Header } from '@/components/Header'
 import { Banner } from '@/components/Banner'
@@ -18,7 +19,7 @@ import { Menu } from '@/store/menu/entities'
 function App() {
   const { appConfigStore, menuStore } = useSelector((state: RootState) => ({
     appConfigStore: state.appConfig.config,
-    menuStore: state.menuStore.menu,
+    menuStore: state.menuStore,
   }))
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -26,19 +27,21 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       dispatch(setAppConfig(data.appConfig as unknown as AppConfig))
-      dispatch(setMenu(data.products as unknown as Menu))
-
-      setLoading(false)
     }
 
     if (!appConfigStore.id) {
       fetchData()
-    } else {
+    }
+  }, [appConfigStore, dispatch])
+
+  useEffect(() => {
+    if (!menuStore.menu.id) {
+      dispatch(setMenu(data.products as unknown as Menu))
       setLoading(false)
     }
-  }, [])
+  }, [menuStore, dispatch])
 
-  if (loading) {
+  if (loading && !menuStore.menu.id) {
     return (
       <main className="h-screen w-full flex items-center justify-center">
         <div className="w-96 h-32 rounded-full animate-pulse flex justify-center items-center bg-orange-500">
@@ -50,16 +53,22 @@ function App() {
     )
   }
 
-  const style = {
-    '--bg-colour': appConfigStore.webSettings.backgroundColour,
-    '--primary-colour': appConfigStore.webSettings.primaryColour,
-    '--primary-colour-hover': appConfigStore.webSettings.primaryColourHover,
-    '--nav-colour': appConfigStore.webSettings.navBackgroundColour,
-    '--banner-img': `url(${appConfigStore.webSettings.bannerImage})`,
-  } as CSSProperties
-
   return (
-    <div style={style}>
+    <>
+      <Helmet>
+        <title>{appConfigStore.name}</title>
+        <style type="text/css">
+          {`
+            :root {
+              --bg-colour: ${appConfigStore.webSettings.backgroundColour};
+              --primary-colour: ${appConfigStore.webSettings.primaryColour};
+              --primary-colour-hover: ${appConfigStore.webSettings.primaryColourHover};
+              --nav-colour: ${appConfigStore.webSettings.navBackgroundColour};
+              --banner-img: url(${appConfigStore.webSettings.bannerImage});
+            }
+          `}
+        </style>
+      </Helmet>
       <Header />
       <Banner />
       <main className="container mx-auto mb-20">
@@ -67,10 +76,11 @@ function App() {
         <section className="bg-[rgb(248,249,250)] mt-[0.375rem] w-full px-10 py-8 flex gap-6">
           <div className="w-full bg-white shadow-[0px_2px_14px_0px_rgba(0,0,0,0.14)] py-5 px-4">
             <MenuTypes>
-              {menuStore.sections.map((section) => (
+              {menuStore.sections.map((section, index) => (
                 <MenuTypes.Item
                   key={section.id}
                   name={section.name}
+                  active={index === 0}
                   image={
                     section.images
                       ? section.images[0].image
@@ -90,7 +100,7 @@ function App() {
           <Cart />
         </section>
       </main>
-    </div>
+    </>
   )
 }
 
