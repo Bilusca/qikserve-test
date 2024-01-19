@@ -20,7 +20,7 @@ O teste em questão usam as seguintes tecnologias:
 Primeiro passo é clonar o projeto
 
 ```bash
-$ git clone 
+$ git clone git@github.com:Bilusca/qikserve-test.git
 ```
 
 Segundo passo é rodar o yarn
