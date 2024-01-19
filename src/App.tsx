@@ -15,12 +15,17 @@ import data from '../data.json'
 import { AppConfig } from '@/store/app-config/entities'
 import { setMenu } from '@/store/menu'
 import { Menu } from '@/store/menu/entities'
+import { Modal } from './components/Modal'
+import { Icons } from './components/Icons'
 
 function App() {
-  const { appConfigStore, menuStore } = useSelector((state: RootState) => ({
-    appConfigStore: state.appConfig.config,
-    menuStore: state.menuStore,
-  }))
+  const { appConfigStore, menuStore, cartStore } = useSelector(
+    (state: RootState) => ({
+      appConfigStore: state.appConfig.config,
+      menuStore: state.menuStore,
+      cartStore: state.cartStore,
+    }),
+  )
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
 
@@ -71,10 +76,10 @@ function App() {
       </Helmet>
       <Header />
       <Banner />
-      <main className="container mx-auto mb-20">
+      <main className="container mx-auto mb-20 relative">
         <SearchInput />
-        <section className="bg-[rgb(248,249,250)] mt-[0.375rem] w-full px-10 py-8 flex gap-6">
-          <div className="w-full bg-white shadow-[0px_2px_14px_0px_rgba(0,0,0,0.14)] py-5 px-4">
+        <section className="lg:bg-[rgb(248,249,250)] mt-[0.375rem] w-full lg:px-10 py-8 flex gap-6">
+          <div className="w-full bg-white lg:shadow-[0px_2px_14px_0px_rgba(0,0,0,0.14)] py-5 px-4">
             <MenuTypes>
               {menuStore.sections.map((section, index) => (
                 <MenuTypes.Item
@@ -97,8 +102,34 @@ function App() {
               />
             ))}
           </div>
-          <Cart />
+          <Cart className="hidden lg:block" />
         </section>
+        {cartStore.cart.length ? (
+          <div className="lg:hidden flex flex-col items-center justify-center w-full fixed bottom-0 p-6 pt-2 backdrop-blur-sm">
+            <Modal
+              triggerClass="w-full"
+              trigger={
+                <div className="bg-primary-colour hover:bg-primary-colour-hover p-4 font-semibold text-white rounded-full">
+                  Carrinho <span>•</span>{' '}
+                  {cartStore.cart.length === 1
+                    ? `${cartStore.cart.length} item`
+                    : `${cartStore.cart.length} items`}
+                </div>
+              }
+            >
+              <Cart className="w-full h-full" />
+              <Modal.Close>
+                <button>
+                  <Icons
+                    name="close"
+                    width={16}
+                    className="text-black absolute top-6 right-6 z-20"
+                  />
+                </button>
+              </Modal.Close>
+            </Modal>
+          </div>
+        ) : null}
       </main>
     </>
   )

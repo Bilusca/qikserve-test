@@ -157,6 +157,11 @@ export function ItemsListItem({
             </button>
           </div>
         </div>
+        <Modal.Close>
+          <button className="w-8 h-8 rounded-full bg-white absolute top-5 right-5 flex items-center justify-center">
+            <Icons name="close" className="text-black" width={12} />
+          </button>
+        </Modal.Close>
       </Modal>
     </li>
   )

@@ -12,7 +12,7 @@ export function CartItem({ item }: { item: ICartItem }) {
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 bg-white">
       <div className="flex items-center justify-between">
         <span className="tracking-[0.5px]">{item.name}</span>
         <strong className="font-medium tracking-[0.5px]">

@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-app-bg font-roboto scroll-smooth;
+  @apply lg:bg-app-bg font-roboto scroll-smooth;
 }
 
 /* styles.css */

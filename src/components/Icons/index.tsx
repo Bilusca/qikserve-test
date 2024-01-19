@@ -4,6 +4,7 @@ import { Plus } from './Plus'
 import { Minus } from './Minus'
 import { Caret } from './Caret'
 import { Close } from './Close'
+import { Menu } from './Menu'
 
 const ICONS = {
   search: Search,
@@ -11,6 +12,7 @@ const ICONS = {
   minus: Minus,
   caret: Caret,
   close: Close,
+  menu: Menu,
 } as const
 
 interface IconsType extends SVGProps<SVGSVGElement> {
@@ -24,5 +26,5 @@ export const Icons: FC<IconsType> = ({ name, ...rest }) => {
     return <SelectedIcon {...rest} />
   }
 
-  return <small className="text-xs">icon don't exists</small>
+  return <small className="text-xs">icon don`t exists</small>
 }
